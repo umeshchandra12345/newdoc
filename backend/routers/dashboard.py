@@ -3,13 +3,13 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from database import get_db
 import models
-from auth import get_current_user
+from auth import get_optional_current_user
 from typing import Optional
 
 router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
 
 @router.get("")
-def get_dashboard_data(year: int = Query(2026), db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+def get_dashboard_data(year: int = Query(2026), db: Session = Depends(get_db), current_user: Optional[models.User] = Depends(get_optional_current_user)):
     # Emissions for selected year
     year_emissions = db.query(models.Emission).filter(models.Emission.year == year).all()
     

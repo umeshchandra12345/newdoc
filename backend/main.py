@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
 import models
-from routers import auth, dashboard, emissions, products, suppliers, reduction, regulatory
+from routers import auth, dashboard, emissions, products, suppliers, reduction, regulatory, analytics
 
 # Ensure database tables exist
 Base.metadata.create_all(bind=engine)
@@ -25,6 +25,7 @@ app.add_middleware(
 # Register routers
 app.include_router(auth.router)
 app.include_router(dashboard.router)
+app.include_router(analytics.router)
 app.include_router(emissions.router)
 app.include_router(products.router)
 app.include_router(suppliers.router)
